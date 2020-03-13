@@ -3,7 +3,7 @@ var SIR = SIR || {};
 
 
 SIR.italy = function(){
-    var popn_it = 70000000
+    var popn_it = 60000000
     var scale_by = 100;
     var data_IT_y = [3,	20,	62,	155,	229,	322	,453,	655	,888,	1128,	1694,	2036,	2502,	3089,	3858,	4636,	5883,	7375,	9172,	10149	,12462];
     var data_IT = [];
