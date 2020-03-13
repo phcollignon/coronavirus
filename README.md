@@ -5,7 +5,7 @@ This repository contains an interactive SEIR model with a try to match Cornaviru
 Data from Italy are plotted in black.
 
 Please note that I am not epidemiologist, the parameters might be wrong and the actions for containements are not taken into account  ..
-If some epidemilogits could validate and contribute to this work .. it would be great !
+(It looks like the max percentage is low ?!) If some epidemilogits could validate and contribute to this work .. it would be great !
 Poeple need to know where we are going !
 
 It is based on a work done by robmoss (https://github.com/robmoss/) 
