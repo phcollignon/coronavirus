@@ -1,0 +1,63 @@
+/*
+ * Theme the slider's appearance, based on the following references:
+ *
+ * https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+ * http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
+ * http://codepen.io/aronwoost/pen/nlyrf
+ */
+input[type=range] {
+    /* fix for FF unable to apply focus style bug  */
+    /* border: 1px solid white; */
+    -webkit-appearance: none;
+    /* width: 90%; */
+    height: 0.5em;
+    background: #eee8d5;
+    border: none;
+    border-radius: 0px;
+    outline: none;
+}
+
+input[type=range]::-moz-range-track {
+    /* width: 90%; */
+    height: 0.5em;
+    background: #eee8d5;
+    border: none;
+    border-radius: 0px;
+}
+
+input[type=range]::-ms-track {
+    /* width: 90%; */
+    height: 0.5em;
+    background: #eee8d5;
+    border: none;
+    border-radius: 0px;
+}
+
+input[type=range]::-ms-track, input[type=range]::-ms-fill-lower, input[type=range]::-ms-fill-upper {
+    color: transparent;
+}
+
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    background: #3182bd;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    background: #3182bd;
+}
+
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    background: #3182bd;
+}

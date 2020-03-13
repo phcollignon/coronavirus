@@ -1,0 +1,32 @@
+span.varS { color: blue; }
+span.varE { color: orange; }
+span.varI { color: red; }
+span.varR { color: green; }
+path.varS { stroke: blue; stroke-width: 2; fill: none; }
+path.varE { stroke: orange; stroke-width: 2; fill: none; }
+path.varI { stroke: red; stroke-width: 2; fill: none; }
+path.varR { stroke: green; stroke-width: 2; fill: none; }
+path.varIT { stroke: black; stroke-width: 2; fill: none; }
+
+/* span.plot-control { display: inline-block; margin: 1em;} */
+span.plot-control { display: block; margin: 1em;}
+input[type=range] { width: 25em; display: inline-block; vertical-align: middle; }
+/* h2 { text-align: center; } */
+h2 { text-align: center; }
+#model-params h2 { text-align: left; padding-left: 1.5rem; }
+#legend { text-align: center; width: 50vw; margin: 0 auto; }
+#model-eqns { float: left; width: 35%; }
+#model-params { float: right; width: 60%; }
+#plot { clear: both; padding-bottom: 2em; }
+#plot svg { width: 75vw; height: 40vh; margin: 0 auto; display: block; }
+.axis { stroke: black; stroke-linecap: round; }
+#diagram { text-align: center; padding-bottom: 2em; }
+#diagram img { width: 30em; }
+
+#model-container { width: auto; text-align: center; }
+#model-container > div { text-align: left;}
+#model-container #model-eqns { width: auto; padding-right: 1em; display: inline-block; float: none; vertical-align: top; }
+#model-container #model-params { width: auto; padding-left: 1em; display: inline-block; float: none; vertical-align: top; }
+
+#footer { text-align: center; padding-top: 2em; font-size: 90%; }
+#footer a:link, #footer a:visited, #footer a:hover, #footer a:focus, #footer a:active { color: #3182bd; }

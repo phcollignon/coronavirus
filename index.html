@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SEIR disease model</title>
+    <script type="text/javascript" src="d3.min.js" charset="utf-8">
+    </script>
+    <link rel="stylesheet" type="text/css" href="seir.css" />
+    <link rel="stylesheet" type="text/css" href="slider.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      TeX: { equationNumbers: {
+        autoNumber: "AMS",
+        extensions: ["color.js"]
+      }}});
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  <body>
+    <div id="diagram">
+      <img src="model-diagram.png" />
+    </div>
+    <div id="legend">
+      The plot below shows the number of
+      <span class="varIT"><b>Italy (data)</b></span>,
+      <span class="varS">Susceptible (model)</span>,
+      <span class="varE">Exposed (model)</span>,
+      <span class="varI">Infectious (model)</span>, and
+      <span class="varR">Resistant (model)</span> individuals over time
+      (in days) as percentages of the entire population.
+    </div>
+    <div id="plot-container">
+      <div id="plot">
+      </div>
+    </div>
+    <div id="model-container">
+    
+    <div id="model-params">
+      <h2>Parameters</h2>
+      <span class="plot-control">
+        <input id="R0" type="range" min="0" max="0" />
+        <label for="R0">R<sub>0</sub>:</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="lat_durn" type="range" min="0" max="0" />
+        <label for="lat_durn">Latent period
+          \(\left(\frac{1}{\alpha}\right)\):</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="inf_durn" type="range" min="0" max="0" />
+        <label for="inf_durn">Infectious period
+          \(\left(\frac{1}{\gamma}\right)\):</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="res_durn" type="range" min="0" max="0" />
+        <label for="res_durn">Duration of resistance
+          \(\left(\frac{1}{\sigma}\right)\):</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="eta" type="range" min="0" max="0" />
+        <label for="eta">Mixing exponent
+          \(\left(\eta\right)\):</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="susc_frac" type="range" min="0" max="0" />
+        <label for="susc_frac">Initial susceptibility
+          \(\left(S(t=0)\right)\):</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="n_days" type="range" min="0" max="0" />
+        <label for="n_days">Days:</label>
+        <span class="show_value"></span>
+      </span>
+      <span class="plot-control">
+        <input id="y_max" type="range" min="0" max="0" />
+        <label for="y_max">Upper bound for Y axis:</label>
+        <span class="show_value"></span>%
+      </span>
+    </div>
+    <div id="model-eqns">
+      <h2>Equations</h2>
+      <script type="math/tex; mode=display">% <![CDATA[
+  \begin{align*}
+    \beta &= R_0 \cdot \gamma \\
+    \frac{{d\class{varS}{S}}}{dt} &= - \beta \class{varI}{I} \cdot \left(\frac{\class{varS}{S}}{N}\right)^\eta + \sigma \class{varR}{R} \\
+    \frac{d\class{varE}{E}}{dt} &= \beta \class{varI}{I} \cdot \left(\frac{\class{varS}{S}}{N}\right)^\eta - \alpha \class{varE}{E} \\
+    \frac{d\class{varI}{I}}{dt} &= \alpha \class{varE}{E} - \gamma \class{varI}{I} \\
+    \frac{d\class{varR}{R}}{dt} &= \gamma \class{varI}{I} - \sigma \class{varR}{R} \\
+  \end{align*}
+   %]]></script>
+    </div>
+    </div>
+    
+    <div id="footer">
+      <a href="https://bitbucket.org/robmoss/seir-demo-javascript">Available on Bitbucket</a>
+    </div>
+
+    <script type="text/javascript" src="seir.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var param_vals = {
+          n_days: [{value: 30, default: true},{value: 90},{value: 120}],
+          y_max: [{value: 0.1, default: true}, {value: 1}, {value:5}, {value: 10},
+                  {value: 20}, {value: 30}, {value: 35}, {value: 40},
+                  {value: 45}, {value: 50}, {value: 55}, {value: 60},
+                  {value: 65}, {value: 70}, {value: 75}, {value: 80},
+                  {value: 85}, {value: 90}, {value: 95},
+                  {value: 100}],
+          R0: [{value: 1.0}, {value: 1.1}, {value: 1.2},
+               {value: 1.4}, {value: 1.6}, {value: 1.8},
+               {value: 2.0}, {value: 2.2, default: true}, {value: 3.0}, {value: 4.0},
+               {value: 5.0}, {value: 10.0}],
+          lat_durn: [{value: 0.5, label: '½ day'},
+                     {value: 2.0, label: '2 day'},
+                     {value: 2.5, label: '2.5 days', default: true},
+                     {value: 3.0, label: '3 days'},
+                     {value: 5.0, label: '5 day'},
+                     {value: 7.0, label: '1 week'}],
+          inf_durn: [{value: 0.5, label: '½ day'},
+                     {value: 1.0, label: '1 day'},
+                     {value: 2.0, label: '2 days', default: true},
+                     {value: 2.5, label: '2.5 days'},
+                     {value: 7.0, label: '1 week'}],
+          res_durn: [{value: 7, label: '1 week'},
+                     {value: 30, label: '1 month'},
+                     {value: 180, label: '6 months'},
+                     {value: 365, label: '1 year'},
+                     {value: -1, label: 'Permanent', default: true}],
+          eta: [{value: 1, label: '1 (homogeneous)', default: true},
+                {value: 1.2, label: '1.2 (heterogeneous)'},
+                {value: 1.4, label: '1.4 (heterogeneous)'},
+                {value: 1.6, label: '1.6 (heterogeneous)'},
+                {value: 1.8, label: '1.8 (heterogeneous)'},
+                {value: 2.0, label: '2.0 (heterogeneous)'},
+                {value: 2.5, label: '2.5 (heterogeneous)'},
+                {value: 3.0, label: '3.0 (heterogeneous)'}],
+          susc_frac: [{value: 0.25, label: '20%'},
+                      {value: 0.50, label: '50%'},
+                      {value: 0.75, label: '75%'},
+                      {value: 0.90, label: '90%'},
+                      {value: 1.00, label: '100%', default: true}]
+      };
+      SIR.plot('#plot', '#model-params', param_vals);
+    </script>
+  </body>
+</html>
