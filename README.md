@@ -8,11 +8,13 @@ Please note that I am not epidemiologist, the parameters might be wrong and the 
 If some epidemilogits could validate and contribute to this work .. it would be great !
 Poeple need to know where we are going !
 
+It is based on a work done by robmoss (https://github.com/robmoss/seir-demo) 
+with default parameters set to match data from Italy.
+
 ![alt text](coronavirus.PNG "Coronavirus 1")
 ![alt text](coronavirus2.PNG "Coronavirus 2")
 
-It is based on a work done by robmoss (https://github.com/robmoss/seir-demo) 
-with default parameters set to match data from Italy.
+
 
 
 ## License
