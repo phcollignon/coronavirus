@@ -10,6 +10,8 @@ We need to know where we are going !
 
 How to use this project : just clone and open index.html file locally.
 
+Or use this demo link if you just want to play with the parameters .. [http://phico.io/coronavirus/](http://phico.io/coronavirus/) 
+
 It is based on a work done by robmoss (https://github.com/robmoss/) 
 with default parameters set to match data from Italy.
 
