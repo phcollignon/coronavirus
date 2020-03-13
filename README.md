@@ -8,6 +8,8 @@ Please note that I am not epidemiologist, the parameters might be wrong and the 
 If some epidemilogists could validate and contribute to this work .. it would be great !
 We need to know where we are going !
 
+How to use this project : just clone and open index.html file locally.
+
 It is based on a work done by robmoss (https://github.com/robmoss/) 
 with default parameters set to match data from Italy.
 
