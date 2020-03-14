@@ -2,18 +2,30 @@
 var SIR = SIR || {};
 
 
-SIR.italy = function(){
+SIR.italy = function () {
     var popn_it = 60000000
     var scale_by = 100;
-    var data_IT_y = [3,	20,	62,	155,	229,	322	,453,	655	,888,	1128,	1694,	2036,	2502,	3089,	3858,	4636,	5883,	7375,	9172,	10149	,12462];
+    var data_IT_y = [3, 20, 62, 155, 229, 322, 453, 655, 888, 1128, 1694, 2036, 2502, 3089, 3858, 4636, 5883, 7375, 9172, 10149, 12462];
     var data_IT = [];
-    for (i = 0; i < data_IT_y.length; i++) { 
-        data_IT.push({x: i, y : scale_by * data_IT_y[i] / popn_it })
-    } 
-   return data_IT;
+    for (i = 0; i < data_IT_y.length; i++) {
+        data_IT.push({ x: i, y: scale_by * data_IT_y[i] / popn_it })
+    }
+    return data_IT;
 };
 
-SIR.solve = function(popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
+SIR.belgium = function () {
+    var popn_be = 10000000
+    var scale_by = 100;
+    var data_BE_y = [1, 2, 8, 13, 23, 50, 109, 169, 200, 239, 267, 314];
+    var data_BE = [];
+    for (i = 0; i < data_BE_y.length; i++) {
+        data_BE.push({ x: i, y: scale_by * data_BE_y[i] / popn_be })
+    }
+    return data_BE;
+
+}
+
+SIR.solve = function (popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
     var s = new Float64Array(n + 1),
         e = new Float64Array(n + 1),
         i = new Float64Array(n + 1),
@@ -24,23 +36,23 @@ SIR.solve = function(popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
     r[0] = Math.max(0.0, 1.0 - s[0] - e[0] - i[0]);
     var beta = R0 / inf_durn;
 
-    var s_to_e = function(s, e, i, r) {
-        return(beta * Math.pow(s, eta) * i);
+    var s_to_e = function (s, e, i, r) {
+        return (beta * Math.pow(s, eta) * i);
     };
 
-    var e_to_i = function(s, e, i, r) {
-        return(e / lat_durn);
+    var e_to_i = function (s, e, i, r) {
+        return (e / lat_durn);
     };
 
-    var i_to_r = function(s, e, i, r) {
-        return(i / inf_durn);
+    var i_to_r = function (s, e, i, r) {
+        return (i / inf_durn);
     };
 
-    var r_to_s = function(s, e, i, r) {
+    var r_to_s = function (s, e, i, r) {
         if (res_durn <= 0) {
-            return(0);
+            return (0);
         }
-        return(r / res_durn);
+        return (r / res_durn);
     };
 
     // Index variable for several loops, below.
@@ -79,10 +91,10 @@ SIR.solve = function(popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
     var scale_by = 100;
 
     for (ix = 0; ix < n + 1; ix++) {
-        data_S.push({x: ix, y: scale_by * s[ix]});
-        data_E.push({x: ix, y: scale_by * e[ix]});
-        data_I.push({x: ix, y: scale_by * i[ix]});
-        data_R.push({x: ix, y: scale_by * r[ix]});
+        data_S.push({ x: ix, y: scale_by * s[ix] });
+        data_E.push({ x: ix, y: scale_by * e[ix] });
+        data_I.push({ x: ix, y: scale_by * i[ix] });
+        data_R.push({ x: ix, y: scale_by * r[ix] });
         if (data_S[ix].y > data_max) { data_max = data_S[ix].y; }
         if (data_E[ix].y > data_max) { data_max = data_E[ix].y; }
         if (data_I[ix].y > data_max) { data_max = data_I[ix].y; }
@@ -92,8 +104,8 @@ SIR.solve = function(popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
     // Return lists of objects for use with D3.
     data_max = scale_by;
     //return({s: Math.log10(data_S), e: Math.log10(data_E), i: Math.log10(data_I), r: Math.log10(data_R), ymax: Math.log10(data_max)});
-  
-    return({s: data_S, e: data_E, i: data_I, r:data_R, ymax: data_max});
+
+    return ({ s: data_S, e: data_E, i: data_I, r: data_R, ymax: data_max });
 };
 
 
@@ -102,7 +114,7 @@ SIR.solve = function(popn, s_frac, R0, lat_durn, inf_durn, res_durn, eta, n) {
 
 
 
-SIR.plot = function(plot_id, ctrl_id, param_vals) {
+SIR.plot = function (plot_id, ctrl_id, param_vals) {
     var plot = {};
 
     plot.svg = d3.select(plot_id).append('svg');
@@ -136,8 +148,8 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
     }
 
     // Set parameters to initial form values.
-    var set_param = function(update_plot) {
-        return(function() {
+    var set_param = function (update_plot) {
+        return (function () {
             if (this.id in plot.params) {
                 if (this.type === "range") {
                     if (this.min === this.max) {
@@ -148,13 +160,13 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
                             this.step = 1;
                             this.data = values;
                             // Pick the default initial value, if specified.
-                            var def = values.findIndex(function(v) { return v.default; });
+                            var def = values.findIndex(function (v) { return v.default; });
                             if (def >= 0) {
                                 this.value = def;
                             }
                         } else {
                             console.log("No values to initialise '%s'",
-                                        this.id);
+                                this.id);
                             return;
                         }
                     }
@@ -177,7 +189,7 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
                 }
             } else {
                 console.log("Form control for unknown parameter '%s'",
-                            this.id);
+                    this.id);
             }
         });
     };
@@ -186,15 +198,15 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
     plot.ctrls.selectAll('input').each(set_param(false));
 
     plot.draw_line = d3.svg.line()
-        .x(function(d) {
+        .x(function (d) {
             return plot.x_range(d.x);
         })
-        .y(function(d) {
+        .y(function (d) {
             return plot.y_range(d.y);
         })
         .interpolate('linear');
 
-    plot.update = function() {
+    plot.update = function () {
         var output = SIR.solve(
             plot.params.popn,
             plot.params.susc_frac,
@@ -231,7 +243,7 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
             .scale(plot.y_range)
             .orient('left')
             .tickSize(0)
-            .tickFormat(function(d) { return d + "%"; })
+            .tickFormat(function (d) { return d + "%"; })
             .ticks(4);
 
         // (Re)draw axes.
@@ -251,7 +263,7 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
         }
         plot.x_ticks
             .attr('transform', 'translate(0,' +
-                  (plot.height - 0.5 * plot.margin.bottom) + ')')
+                (plot.height - 0.5 * plot.margin.bottom) + ')')
             .call(plot.x_axis);
         if (plot.y_line === undefined) {
             plot.y_line = plot.svg.append('svg:line')
@@ -287,17 +299,28 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
         plot.svg.append('svg:path')
             .attr('d', plot.draw_line(output.r))
             .attr('class', 'varR series');
-        
+
         var italy = SIR.italy()
         plot.svg.append('svg:path')
             .attr('d', plot.draw_line(italy))
             .attr('class', 'varIT series');
         plot.svg.selectAll("dot")
             .data(italy)
-          .enter().append("circle")
+            .enter().append("circle")
             .attr("r", 3.5)
-            .attr("cx", function(d) { console.log (d.x); return  plot.x_range(d.x); })
-            .attr("cy", function(d) { console.log (d.y); return  plot.y_range(d.y); });
+            .attr("cx", function (d) { console.log(d.x); return plot.x_range(d.x); })
+            .attr("cy", function (d) { console.log(d.y); return plot.y_range(d.y); }); 
+
+       /* var belgium = SIR.belgium()
+        plot.svg.append('svg:path')
+            .attr('d', plot.draw_line(belgium))
+            .attr('class', 'varBE series');
+        plot.svg.selectAll("dot")
+            .data(belgium)
+            .enter().append("circle")
+            .attr("r", 3.5)
+            .attr("cx", function (d) { console.log(d.x); return plot.x_range(d.x); })
+            .attr("cy", function (d) { console.log(d.y); return plot.y_range(d.y); });*/
 
     };
 
@@ -306,7 +329,7 @@ SIR.plot = function(plot_id, ctrl_id, param_vals) {
     plot.ctrls.selectAll('input').on("change.param_val", set_param(true));
     plot.ctrls.selectAll('input').on("input.param_val", set_param(true));
 
-    d3.select(window).on('resize', function() {
+    d3.select(window).on('resize', function () {
         var svg_rect = plot.svg.node().getBoundingClientRect();
         plot.width = svg_rect.width;
         plot.height = svg_rect.height;

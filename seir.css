@@ -7,6 +7,7 @@ path.varE { stroke: orange; stroke-width: 2; fill: none; }
 path.varI { stroke: red; stroke-width: 2; fill: none; }
 path.varR { stroke: green; stroke-width: 2; fill: none; }
 path.varIT { stroke: black; stroke-width: 2; fill: none; }
+path.varBE { stroke: purple; stroke-width: 2; fill: none; }
 
 /* span.plot-control { display: inline-block; margin: 1em;} */
 span.plot-control { display: block; margin: 1em;}
