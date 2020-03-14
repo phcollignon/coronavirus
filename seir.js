@@ -308,8 +308,8 @@ SIR.plot = function (plot_id, ctrl_id, param_vals) {
             .data(italy)
             .enter().append("circle")
             .attr("r", 3.5)
-            .attr("cx", function (d) { console.log(d.x); return plot.x_range(d.x); })
-            .attr("cy", function (d) { console.log(d.y); return plot.y_range(d.y); }); 
+            .attr("cx", function (d) { return plot.x_range(d.x); })
+            .attr("cy", function (d) { return plot.y_range(d.y); }); 
 
        /* var belgium = SIR.belgium()
         plot.svg.append('svg:path')
